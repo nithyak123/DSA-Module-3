@@ -5,29 +5,29 @@ public class SinglyLinkedList<E> {
 	}
 
 	// This is the only field of the class.  It holds the head of the list 
-	ListNode head;
+	Node head;
 	
 	// Length of the linked list
 	private int length = 0;
 
 	// Return the first node in the list 
-	public synchronized ListNode getHead() { 
+	public synchronized Node getHead() { 
 		return head; 
 	}
 
 	// Insert a node at the beginning of the list 
-	public synchronized void insertAtBegin(ListNode node) {
+	public synchronized void insertAtBegin(Node node) {
 		node.setNext(head);
 		head = node;
 		length ++;
 	}
 
 	// Insert a node at the end of the list 
-	public synchronized void insertAtEnd(ListNode node) {
+	public synchronized void insertAtEnd(Node node) {
 		if (head == null) 
 			head = node;
 		else {
-			ListNode p, q;
+			Node p, q;
 			for(p = head; (q = p.getNext()) != null; p = q);
 				p.setNext(node);
 		}
@@ -47,21 +47,21 @@ public class SinglyLinkedList<E> {
 
 		// if the list is empty, make it be the only element
 		if (head == null) {
-			head = new ListNode(data);
+			head = new Node(data);
 		}
 		// if adding at the front of the list...
 		else if (position == 0) {
-			ListNode temp = new ListNode(data);
+			Node temp = new Node(data);
 			temp.next = head;
 			head = temp;
 		}
 		// else find the correct position and insert
 		else {
-			ListNode temp = head;
+			Node temp = head;
 			for (int i=1; i<position; i+=1) {
 				temp = temp.getNext();
 			}
-			ListNode newNode = new ListNode(data);
+			Node newNode = new Node(data);
 			newNode.next = temp.next;
 			temp.setNext(newNode);
 		}
@@ -70,8 +70,8 @@ public class SinglyLinkedList<E> {
 	} 
 	
 	// Remove and return the node at the head of the list 
-	public synchronized ListNode removeFromBegin() {
-		ListNode node = head;
+	public synchronized Node removeFromBegin() {
+		Node node = head;
 		if (node != null) {
 			head = node.getNext();
 			node.setNext(null);
@@ -80,13 +80,13 @@ public class SinglyLinkedList<E> {
 	}
 	
 	// Remove and return the node at the end of the list 
-	public synchronized ListNode getLast() {
+	public synchronized Node getLast() {
 		if (head == null) 
 			return null;
 		if (head.getNext() == null) {
 			return head;
 		}
-		ListNode p = head.getNext();
+		Node p = head.getNext();
 		while(p.getNext() != null) { 
 			p = p.getNext();
 		}
@@ -94,10 +94,10 @@ public class SinglyLinkedList<E> {
 	}
 
 	// Remove and return the node at the end of the list 
-	public synchronized ListNode removeFromEnd() {
+	public synchronized Node removeFromEnd() {
 		if (head == null) 
 			return null;
-		ListNode p = head, q = null, next = head.getNext();
+		Node p = head, q = null, next = head.getNext();
 		if (next == null) {
 			head = null;
 			// reduce the length of the list
@@ -116,7 +116,7 @@ public class SinglyLinkedList<E> {
 
 	// Remove a node matching the specified node from the list.  
 	// Use equals() instead of == to test for a matched node.
-	public synchronized void removeMatched(ListNode node) {
+	public synchronized void removeMatched(Node node) {
 		if (head == null) 
 			return;
 		if (node.equals(head)) { 
@@ -125,7 +125,7 @@ public class SinglyLinkedList<E> {
 			length-=1;			
 			return;
 		}
-		ListNode p = head, q = null;
+		Node p = head, q = null;
 		while((q = p.getNext()) != null) {
 			if (node.equals(q)) {
 				p.setNext(q.getNext());
@@ -160,7 +160,7 @@ public class SinglyLinkedList<E> {
 		}
 		// else advance to the correct position and remove
 		else {
-			ListNode temp = head;
+			Node temp = head;
 			for (int i=1; i<position; i+=1) {
 				temp = temp.getNext();
 			}
@@ -177,7 +177,7 @@ public class SinglyLinkedList<E> {
 			return result+"]";
 		}
 		result = result + head.getData();
-		ListNode temp = head.getNext();
+		Node temp = head.getNext();
 		while (temp != null) {
 			result = result + "," + temp.getData();
 			temp = temp.getNext();
@@ -194,10 +194,10 @@ public class SinglyLinkedList<E> {
 	// The equals method us used to determine equality.
 	public int getPosition(int data) {
 		// go looking for the data
-		ListNode temp = head;
+		Node temp = head;
 		int pos = 0;
 		while (temp != null) {
-			if (temp.getData() == data) {
+			if (temp.getData().equals(data)) {
 				// return the position if found
 				return pos;
 			}
